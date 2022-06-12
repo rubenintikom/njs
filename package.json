@@ -1,0 +1,31 @@
+{
+  "name": "njs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "dev": "npx tsc main.ts && node main.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rubenintikom/njs.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rubenintikom/njs/issues"
+  },
+  "homepage": "https://github.com/rubenintikom/njs#readme",
+  "devDependencies": {
+    "@types/node": "^17.0.42",
+    "nodemon": "^2.0.16",
+    "prisma": "^3.15.1",
+    "tslib": "^2.4.0",
+    "typescript": "^4.7.3"
+  },
+  "dependencies": {
+    "@prisma/client": "^3.15.1"
+  }
+}
