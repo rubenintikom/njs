@@ -30,6 +30,6 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
   }
 });
 
-server.listen(port, () => {
+server.listen(port,'https://nodejsapp110622.herokuapp.com', () => {
   console.log(`Server listening on port ${port}`);
 });
