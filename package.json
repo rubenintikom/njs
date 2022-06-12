@@ -4,6 +4,7 @@
   "description": "",
   "main": "main.js",
   "scripts": {
+    "start": "npx tsc main.ts && node main.js",
     "dev": "npx tsc main.ts && node main.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
