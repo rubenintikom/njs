@@ -2,7 +2,7 @@ import { createServer, IncomingMessage, ServerResponse } from 'http';
 import { dataModel } from './dataModel';
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
-const port = 9999;
+const port = 80;
 
 const server = createServer(async (req: IncomingMessage, res: ServerResponse) => {
   res.setHeader('Content-Type', 'application/json');
