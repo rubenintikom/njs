@@ -39,7 +39,7 @@ exports.__esModule = true;
 var http_1 = require("http");
 var client_1 = require("@prisma/client");
 var prisma = new client_1.PrismaClient();
-var port = 9999;
+var port = 80;
 var server = (0, http_1.createServer)(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var posts, xdata, newitem_1, i;
     return __generator(this, function (_a) {
