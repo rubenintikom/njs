@@ -36,31 +36,63 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
+var xfunction_1 = require("./functions/xfunction");
 var http_1 = require("http");
 var client_1 = require("@prisma/client");
+var apiresponse_1 = require("./apiresponse");
+var BIT_1 = require("./BIT");
+var fun = new xfunction_1.XFun();
+var bit = new BIT_1.BIT();
 var prisma = new client_1.PrismaClient();
 var port = 80;
 var server = (0, http_1.createServer)(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var posts, xdata, newitem_1, i;
+    var headers, headerToken, bearerToken, tokenh, tokenb, respon, posts, xdata, newitem_1, i, dogname, xdata;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                res.setHeader('Content-Type', 'application/json');
-                res.setHeader('Access-Control-Allow-Origin', '*');
-                if (!(req.url === '/')) return [3 /*break*/, 3];
+                headers = {
+                    'Access-Control-Allow-Origin': '*',
+                    'Access-Control-Allow-Methods': '*',
+                    'Access-Control-Allow-Headers': 'Content-Type,Content-Length,Authorization,Accept, x-requested-with,cache-control,token',
+                    'Access-Control-Max-Age': '3600',
+                    'Content-Type': 'application/json'
+                };
+                if (req.method == "OPTIONS") {
+                    res.writeHead(200, headers).write('PREFLIGHT OK');
+                    console.log("Opt OK");
+                }
+                headerToken = req.headers['token'];
+                bearerToken = req.headers['authorization'];
+                tokenh = "token123";
+                tokenb = 'Bearer token123';
+                console.log(headerToken);
+                console.log(bearerToken);
+                respon = new apiresponse_1.IApiResponse();
+                if (!(headerToken == tokenh || bearerToken == tokenb)) return [3 /*break*/, 6];
+                if (!(req.url === '/')) return [3 /*break*/, 1];
+                respon = {
+                    status: 200,
+                    message: 'OK',
+                    data: []
+                };
+                res.end(JSON.stringify(respon));
+                return [3 /*break*/, 5];
+            case 1:
+                if (!(req.url === '/getData')) return [3 /*break*/, 4];
                 //await prisma.user.create({data:{id:1,email:'rubenintikom@gmail.com',name:'Ruben'}});
                 //await prisma.profile.create({data:{userId:1,bio:'make it simple !'}});
                 return [4 /*yield*/, prisma.post.create({ data: { authorId: 1, title: 'post 1', content: 'post 1 content' } })];
-            case 1:
+            case 2:
                 //await prisma.user.create({data:{id:1,email:'rubenintikom@gmail.com',name:'Ruben'}});
                 //await prisma.profile.create({data:{userId:1,bio:'make it simple !'}});
                 _a.sent();
                 return [4 /*yield*/, prisma.post.findMany()];
-            case 2:
-                posts = _a.sent();
-                res.end(JSON.stringify(posts));
-                return [3 /*break*/, 4];
             case 3:
+                posts = _a.sent();
+                respon = { status: res.statusCode, message: 'okok' + res.statusMessage, data: posts };
+                res.writeHead(200, "OK", headers).end(JSON.stringify(respon));
+                return [3 /*break*/, 5];
+            case 4:
                 if (req.url === '/getDatax') {
                     xdata = [
                         { id: 1, name: 'John' }
@@ -73,13 +105,41 @@ var server = (0, http_1.createServer)(function (req, res) { return __awaiter(voi
                             xdata.unshift.apply(xdata, [newitem_1]);
                         }
                     }
-                    res.end(JSON.stringify(xdata));
+                    respon = { status: res.statusCode, message: 'Success', data: xdata };
+                    res.writeHead(200, headers).end(JSON.stringify(respon));
                 }
-                _a.label = 4;
-            case 4: return [2 /*return*/];
+                else if (req.url == "/bit") {
+                    bit.prosesAngkaAjaib(2143);
+                    dogname = bit.prosesHotdog("hit dig");
+                    xdata = [
+                        { id: 1, name: dogname }
+                    ];
+                    respon = { status: res.statusCode, message: 'Success', data: xdata };
+                    res.writeHead(200, headers).end(JSON.stringify(respon));
+                }
+                else {
+                    console.error("Invalid url");
+                    res.writeHead(403, headers).end(JSON.stringify({ status: res.statusCode, message: res.statusMessage, data: [] }));
+                }
+                _a.label = 5;
+            case 5: return [3 /*break*/, 7];
+            case 6:
+                console.error("Invalid token");
+                res.writeHead(200, headers).end(JSON.stringify({ status: res.statusCode, message: 'INVALID TOKEN', data: [] }));
+                _a.label = 7;
+            case 7: return [2 /*return*/];
         }
     });
 }); });
 server.listen(port, function () {
     console.log("Server listening on port ".concat(port));
+});
+server.on('error', function (err) {
+    console.error("server on error: " + err);
+});
+server.on('connection', function (socket) {
+    console.log('server on connection: ' + socket.remoteAddress);
+});
+server.on('close', function () {
+    console.log('server on close');
 });

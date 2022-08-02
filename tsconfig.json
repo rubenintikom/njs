@@ -1,0 +1,10 @@
+{
+    "compilerOptions": {
+      "target": "es5",
+      "module": "commonjs",
+      "explainFiles": true,
+      "declaration": true,
+      "listFiles": true,
+      "outDir": "/serverjs"
+    }
+  }
